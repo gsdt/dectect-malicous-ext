@@ -180,7 +180,7 @@ def detect(md,url):
 			    url =scanport(url)
 		furniture=feature_extract(url,0)
 		if furniture ==-1 :
-			print "url is die"
+			print("url is die")
 			return -1
 		else:
 			filename="data/predictions.csv"
@@ -189,7 +189,7 @@ def detect(md,url):
 			detector = Detector(mode=md,datapath=filename)
 			return detector.predict()
 	else:
-		print "you input wrong "
+		print("you input wrong ")
                 return -2
 
 if __name__ == "__main__":
@@ -199,12 +199,12 @@ if __name__ == "__main__":
 	else:
 		url =''
         if main(md,url)==0:
-            print "clear url"
+            print("clear url")
 
         elif main(md,url) == -2:
             pass
         else:
-            print "malicious url"
+            print("malicious url")
 
 		
 
