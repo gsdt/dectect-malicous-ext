@@ -4,7 +4,7 @@ import json
 from flask import Flask, request, Response
 from flask_cors import CORS
 from flask import jsonify
-from urllib.parse import urlparse
+from urlparse  import urlparse
 import machine_learning
 
 app = Flask(__name__)
