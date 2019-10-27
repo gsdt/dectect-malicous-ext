@@ -34,7 +34,7 @@ def check_request_url():
         if result == None:
             response_data = {
                 "result": {
-                    "label": machine_learning.detect(1, url),
+                    "label": int(machine_learning.detect(1, url)),
                     "source": "machine_learning"
                 }
             }
