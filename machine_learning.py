@@ -7,7 +7,7 @@ from pyspark.ml.classification import RandomForestClassifier
 from pyspark.ml.feature import IndexToString, StringIndexer, VectorIndexer, VectorAssembler
 from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 from pyspark.mllib.evaluation import MulticlassMetrics
-from Furniture import *
+from furniture import *
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
