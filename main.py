@@ -5,6 +5,7 @@ from flask import Flask, request, Response
 from flask_cors import CORS
 from flask import jsonify
 from urllib.parse import urlparse
+import machine_learning
 
 app = Flask(__name__)
 CORS(app)
@@ -33,7 +34,8 @@ def check_request_url():
         if result == None:
             response_data = {
                 "result": {
-                    "label": "-1",
+                    "label": machine_learning.detect(1, url),
+                    "source": machine_learning
                 }
             }
             return jsonify(response_data)
