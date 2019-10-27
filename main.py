@@ -35,7 +35,7 @@ def check_request_url():
             response_data = {
                 "result": {
                     "label": machine_learning.detect(1, url),
-                    "source": machine_learning
+                    "source": "machine_learning"
                 }
             }
             return jsonify(response_data)
