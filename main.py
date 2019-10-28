@@ -14,6 +14,8 @@ client = MongoClient(MONGO_CONECTION)
 db = client.Detecting_Malicious_URL_db
 collection = db.formated_url
 
+detector = machine_learning.Detector()
+
 @app.route('/api/check', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 def check_request_url():
     if request.method == 'GET': #waiting
@@ -34,7 +36,7 @@ def check_request_url():
         if result == None:
             response_data = {
                 "result": {
-                    "label": int(machine_learning.detect(1, url)),
+                    "label": int(detector.predict(url)),
                     "source": "machine_learning"
                 }
             }
