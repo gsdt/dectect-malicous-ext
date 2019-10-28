@@ -32,13 +32,15 @@ def check_request_url():
 
         label = ""
         result = collection.find_one({"url": url})
-        print(url)
-        print(result)
+        print("Process: ", url)
+        print("From database:", result)
         if result == None:
             start_time = time.time()
+            is_malicous = detector.predict(url)
+            print("Machine learing:", is_malicous)
             response_data = {
                 "result": {
-                    "label": int(detector.predict(url)),
+                    "label": int(is_malicous),
                     "source": "machine_learning"
                 }
             }
@@ -48,7 +50,7 @@ def check_request_url():
             response_data = {
                 "result": {
                     "label": result["label"],
-                    "scource": "databse"
+                    "source": "database"
                 }
             }
             return jsonify(response_data)
