@@ -187,7 +187,7 @@ def detect(md,url):
 
 
 if __name__ == "__main__":
-	detector = Detector()
+    detector = Detector()
     res = detector.predict("https://www.facebook.com")
     print(res)
 
