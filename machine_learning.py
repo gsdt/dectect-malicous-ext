@@ -182,8 +182,8 @@ def detect(md,url):
 			detector = Detector(mode=md,datapath=filename)
 			return detector.predict()
 	else:
-		print("you input wrong ")
-            return -2
+        print("you input wrong ")
+        return -2
 
 
 if __name__ == "__main__":
