@@ -40,34 +40,16 @@ class Detector:
     spark = SparkSession.builder.master("local[*]").appName("MalwareDetector").config("spark.driver.memory", "8g").getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     sc = spark.sparkContext
-    def __init__(self, datapath="data/dataset.csv", modelpath="model",mode=1):
+    def __init__(self, modelpath="model"):
         self.datapath = datapath
-        if mode == 0:
-            self.dataset = self.loadDataset(datapath)
-            (self.trainingData, self.testingData) = self.dataset.randomSplit([0.7, 0.3])
-            self.trainingData = self.trainingData.repartition(300).cache()
-            self.testingData = self.testingData.repartition(300).cache()
-	    
-            self.modelpath = modelpath
-            modelfile = os.path.join(self.modelpath, "detector")
-            if (os.path.exists(modelfile)):
-                print("Load model from: ", self.modelpath)
-                self.model = PipelineModel.load(modelfile)
-            else:
-                print("Train new model")
-                self.model = self.trainModel(self.dataset)
-                
+
+        self.modelpath = modelpath
+        modelfile = os.path.join(self.modelpath, "detector")
+        if (os.path.exists(modelfile)):
+            print("Load model from: ", self.modelpath)
+            self.model = PipelineModel.load(modelfile)
         else:
-            self.predictingData = self.loadDataset(datapath)
-            self.predictingData = self.predictingData.repartition(300).cache()
-            self.modelpath = modelpath
-            modelfile = os.path.join(self.modelpath, "detector")
-            if (os.path.exists(modelfile)):
-                print("Load model from: ", self.modelpath)
-                self.model = PipelineModel.load(modelfile)
-            else:
-                print("Train new model")
-                self.model = self.trainModel(self.dataset)
+            print("Model not found.")
                 
     def loadDataset(self, datapath):
         data = []
@@ -163,7 +145,14 @@ class Detector:
         print("{:*^100}".format(""))
         
     
-    def predict(self):
+    def predict(self, datapath="data/dataset.csv"):
+        furniture=feature_extract(url,0)
+        if furniture ==-1 :
+			print("url is die")
+			return -1
+
+        self.predictingData = furniture
+        self.predictingData = self.predictingData.repartition(300).cache()
         predictions = self.model.transform(self.predictingData)
         df= predictions.select('prediction').collect()
         return df[0].asDict()["prediction"]
@@ -192,19 +181,11 @@ def detect(md,url):
 		print("you input wrong ")
                 return -2
 
-if __name__ == "__main__":
-	md=int(sys.argv[1] )
-	if len(sys.argv)==3:
-		url =sys.argv[2] 
-	else:
-		url =''
-        if main(md,url)==0:
-            print("clear url")
 
-        elif main(md,url) == -2:
-            pass
-        else:
-            print("malicious url")
+if __name__ == "__main__":
+	detector = Detector()
+    res = detector.predict("https://www.facebook.com")
+    print(res)
 
 		
 
