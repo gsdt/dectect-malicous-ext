@@ -22,7 +22,8 @@ def check_request_url():
     if request.method == 'GET': #waiting
         return "GET"
     elif request.method == 'POST':
-        url = request.form["url"]
+        org_url = request.form["url"]
+        url = org_url
 
         o = urlparse(url)
         if o.scheme != '':
@@ -36,7 +37,7 @@ def check_request_url():
         print("From database:", result)
         if result == None:
             start_time = time.time()
-            is_malicous = detector.predict(url)
+            is_malicous = detector.predict(org_url)
             print("Machine learing:", is_malicous)
             response_data = {
                 "result": {
