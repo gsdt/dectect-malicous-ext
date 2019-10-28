@@ -41,7 +41,7 @@ class Detector:
     spark.sparkContext.setLogLevel("ERROR")
     sc = spark.sparkContext
     def __init__(self, modelpath="model"):
-        self.datapath = datapath
+        # self.datapath = datapath
 
         self.modelpath = modelpath
         modelfile = os.path.join(self.modelpath, "detector")
