@@ -6,6 +6,7 @@ from flask_cors import CORS
 from flask import jsonify
 from urlparse  import urlparse
 import machine_learning
+import time
 
 app = Flask(__name__)
 CORS(app)
@@ -34,12 +35,14 @@ def check_request_url():
         print(url)
         print(result)
         if result == None:
+            start_time = time.time()
             response_data = {
                 "result": {
                     "label": int(detector.predict(url)),
                     "source": "machine_learning"
                 }
             }
+            print("--- %s seconds ---" % (time.time() - start_time))
             return jsonify(response_data)
         else:
             response_data = {

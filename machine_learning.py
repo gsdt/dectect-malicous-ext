@@ -188,7 +188,13 @@ def detect(md,url):
 
 if __name__ == "__main__":
     detector = Detector()
+    start_time = time.time();
     res = detector.predict("https://www.facebook.com")
+    print("--- %s seconds ---" % (time.time() - start_time))
+    print(res)
+    start_time = time.time();
+    res = detector.predict("http://vklistt.hop.ru/")
+    print("--- %s seconds ---" % (time.time() - start_time))
     print(res)
 
 		
