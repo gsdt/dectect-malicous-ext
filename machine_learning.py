@@ -151,7 +151,11 @@ class Detector:
 			print("url is die")
 			return -1
 
-        self.predictingData = furniture
+        filename="data/predictions.csv"
+        df= pd.DataFrame(furniture)
+        df.to_csv(filename,index='false')
+
+        self.predictingData = self.loadDataset(filename)
         self.predictingData = self.predictingData.repartition(300).cache()
         predictions = self.model.transform(self.predictingData)
         df= predictions.select('prediction').collect()
@@ -179,7 +183,7 @@ def detect(md,url):
 			return detector.predict()
 	else:
 		print("you input wrong ")
-                return -2
+            return -2
 
 
 if __name__ == "__main__":
