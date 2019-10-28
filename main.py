@@ -37,7 +37,7 @@ def check_request_url():
         print("From database:", result)
         if result == None:
             start_time = time.time()
-            is_malicous = detector.predict(org_url)
+            is_malicous = detector.predict(url)
             print("Machine learing:", is_malicous)
             response_data = {
                 "result": {
