@@ -145,7 +145,7 @@ class Detector:
         print("{:*^100}".format(""))
         
     
-    def predict(self, datapath="data/dataset.csv"):
+    def predict(self, url):
         furniture=feature_extract(url,0)
         if furniture ==-1 :
 			print("url is die")
