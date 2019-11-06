@@ -26,6 +26,10 @@ from sklearn.metrics import confusion_matrix
 from pyspark.mllib.evaluation import MulticlassMetrics
 from pyspark.ml.classification import NaiveBayes
 from pyspark import SparkContext
+from pyspark.sql import SparkSession, DataFrame
+from pyspark.sql.types import *
+from pyspark.sql.functions import *
+from pyspark.conf import SparkConf
 
 if __name__ == "__main__":
     spark = SparkSession\
@@ -70,7 +74,7 @@ if __name__ == "__main__":
 
     lr = LogisticRegression(maxIter=10000, regParam=0.3, elasticNetParam=0, family = "binomial")
     # Train model using logisitic regression
-    lrModel = lr.fit(trainingData)
+    lrModel = lr.fit(dataset)
 
     lrModel.save("mode/trained_model")
 
