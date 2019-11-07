@@ -33,7 +33,7 @@ from pyspark.conf import SparkConf
 
 class Detector:
     def __init__(self):
-        spark = SparkSession\
+        self.spark = SparkSession\
             .builder\
             .appName("Detecting-Malicious-URL App")\
             .getOrCreate()
@@ -44,7 +44,7 @@ class Detector:
         print('Loaded model...')
 
     def predict(self, url):
-        df = spark.createDataFrame([(url, 0)], ['url', 'label'])
+        df = self.spark.createDataFrame([(url, 0)], ['url', 'label'])
         predict_input = self.pipline_fit.transform(df)
         predict_result = self.model.transform(predict_input)
         return int(predict_result.collect()[0]['prediction'])
