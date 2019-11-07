@@ -69,14 +69,14 @@ if __name__ == "__main__":
     # Fit the pipeline to training documents.
     # Pass 'sampled' in the param to set Balanced datasets
     pipelineFit = pipeline.fit(sampled)
-
+    pipelineFit.save('model/pipeline')
     dataset = pipelineFit.transform(sampled)
 
     lr = LogisticRegression(maxIter=10000, regParam=0.3, elasticNetParam=0, family = "binomial")
     # Train model using logisitic regression
     lrModel = lr.fit(dataset)
 
-    lrModel.save("mode/trained_model")
+    lrModel.save("model/trained_model")
 
     print("Done job")
 
