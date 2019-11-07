@@ -9,7 +9,7 @@ from pyspark.mllib.feature import StandardScaler, StandardScalerModel
 from pyspark.mllib.linalg import Vectors
 from pyspark.mllib.util import MLUtils
 from pyspark.ml.classification import LogisticRegression, OneVsRest, LogisticRegressionModel
-from pyspark.ml import Pipeline
+from pyspark.ml import Pipeline, PipelineModel
 from pyspark.sql import Row
 from pyspark.ml.feature import RegexTokenizer, StopWordsRemover, CountVectorizer
 import matplotlib.pyplot as plt
@@ -40,7 +40,7 @@ class Detector:
         print('Loaded spark...')
 
         self.model = LogisticRegressionModel.load("model/trained_model")
-        self.pipline_fit = Pipeline.load("model/pipeline")
+        self.pipline_fit = PipelineModel.load("model/pipeline")
         print('Loaded model...')
 
     def predict(self, url):
