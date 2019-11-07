@@ -6,7 +6,7 @@ import json
 from flask import Flask, request, Response
 from flask_cors import CORS
 from flask import jsonify
-from urlparse  import urlparse
+from urllib.parse import urlparse
 import time
 from ml import Detector
 
