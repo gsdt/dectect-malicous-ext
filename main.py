@@ -19,6 +19,8 @@ CORS(app)
 client = MongoClient(MONGO_CONECTION)
 db = client.Detecting_Malicious_URL_db
 collection = db.formated_url
+collection_reported = db.user_report_url
+collection_excluded = db.user_exclude_url
 
 detector = Detector()
 
@@ -62,15 +64,77 @@ def check_request_url():
     else:
         return create_response(result['label'], 'database')
 
-@app.route('/api/exclude/url', methods = ['POST']) # waiting for exclude url to black or white list
+# for exclude url to black or white list
+@app.route('/api/exclude/url', methods=['POST'])
 def request_exclude_url():
     if request.method == 'POST':
-        return "ECHO: POST"
+        data = []
+        userId = request.form["user_id"]
+        url = request.form["url_exclude"]
+        label = request.form["label"]
 
-@app.route('/api/import/url', methods = [ 'PUT']) # waiting for add url to black or white list
-def request_import_url():
-    if request.method == 'PUT':
-        return "ECHO: PUT"
+        o = urlparse(url)
+        if o.scheme != '':
+            url = url[len(o.scheme) + 3:]
+        if url[-1] == "/":
+            url = url[0:-1]
+
+        data.append({
+            "user_id": userId,
+            "url": url.strip(),
+            "label": label.strip()
+        })
+
+        collection_excluded.insert_many(data)
+
+        response_data = {
+            "result": {
+                "status": "Done !",
+            }
+        }
+
+        return jsonify(response_data)
+
+# for add url to black or white list
+@app.route('/api/report/url', methods=['POST'])
+def request_report_url():
+    if request.method == 'POST':
+        userEmail = request.form["user_email"]
+        url = request.form["url_report"]
+        label = request.form["label"]
+        userName = request.form["user_name"]
+        content_report = request.form["content_report"]
+
+        print(userEmail)
+        print(url)
+        print(label)
+        print(userName)
+        print(content_report)
+        data = []
+
+        o = urlparse(url)
+        if o.scheme != '':
+            url = url[len(o.scheme) + 3:]
+        if url[-1] == "/":
+            url = url[0:-1]
+        
+        data.append({
+            "user_email": userEmail,
+            "url": url,
+            "label": label,
+            "user_name": userName,
+            "reason": content_report
+        })
+
+        collection_reported.insert_many(data)
+        response_data = {
+            "result": {
+                "status": "Report success, thanks your reported !",
+            }
+        }
+
+        return jsonify(response_data)
+        
 
 if __name__=='__main__':
     app.run(host='0.0.0.0', port=80)
