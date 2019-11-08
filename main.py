@@ -65,75 +65,69 @@ def check_request_url():
         return create_response(result['label'], 'database')
 
 # for exclude url to black or white list
-@app.route('/api/exclude/url', methods=['POST'])
+@app.route('/api/exclude', methods=['POST'])
 def request_exclude_url():
-    if request.method == 'POST':
-        data = []
-        userId = request.form["user_id"]
-        url = request.form["url_exclude"]
-        label = request.form["label"]
+    data = []
+    userId = request.form["user_id"]
+    url = request.form["url_exclude"]
+    label = request.form["label"]
 
-        o = urlparse(url)
-        if o.scheme != '':
-            url = url[len(o.scheme) + 3:]
-        if url[-1] == "/":
-            url = url[0:-1]
+    o = urlparse(url)
+    if o.scheme != '':
+        url = url[len(o.scheme) + 3:]
+    if url[-1] == "/":
+        url = url[0:-1]
 
-        data.append({
-            "user_id": userId,
-            "url": url.strip(),
-            "label": label.strip()
-        })
+    data.append({
+        "user_id": userId,
+        "url": url.strip(),
+        "label": label.strip()
+    })
 
-        collection_excluded.insert_many(data)
+    collection_excluded.insert_many(data)
 
-        response_data = {
-            "result": {
-                "status": "Done !",
-            }
+    response_data = {
+        "result": {
+            "status": "Done !",
         }
+    }
 
-        return jsonify(response_data)
+    return jsonify(response_data)
 
 # for add url to black or white list
-@app.route('/api/report/url', methods=['POST'])
+@app.route('/api/report', methods=['POST'])
 def request_report_url():
-    if request.method == 'POST':
-        userEmail = request.form["user_email"]
-        url = request.form["url_report"]
-        label = request.form["label"]
-        userName = request.form["user_name"]
-        content_report = request.form["content_report"]
+    userEmail = request.form["user_email"]
+    url = request.form["url_report"]
+    label = request.form["label"]
+    userName = request.form["user_name"]
+    content_report = request.form["content_report"]
+    data = []
 
-        print(userEmail)
-        print(url)
-        print(label)
-        print(userName)
-        print(content_report)
-        data = []
+    o = urlparse(url)
+    if o.scheme != '':
+        url = url[len(o.scheme) + 3:]
+    if url[-1] == "/":
+        url = url[0:-1]
+    
+    data.append({
+        "user_email": userEmail,
+        "url": url,
+        "label": label,
+        "user_name": userName,
+        "reason": content_report
+    })
 
-        o = urlparse(url)
-        if o.scheme != '':
-            url = url[len(o.scheme) + 3:]
-        if url[-1] == "/":
-            url = url[0:-1]
-        
-        data.append({
-            "user_email": userEmail,
-            "url": url,
-            "label": label,
-            "user_name": userName,
-            "reason": content_report
-        })
+    print(data)
 
-        collection_reported.insert_many(data)
-        response_data = {
-            "result": {
-                "status": "Report success, thanks your reported !",
-            }
+    collection_reported.insert_many(data)
+    response_data = {
+        "result": {
+            "status": "Report success, thanks your reported !",
         }
+    }
 
-        return jsonify(response_data)
+    return jsonify(response_data)
         
 
 if __name__=='__main__':
