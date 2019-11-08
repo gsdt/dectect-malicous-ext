@@ -9,6 +9,9 @@ from flask import jsonify
 from urllib.parse import urlparse
 import time
 from ml import Detector
+import os
+os.environ["PYSPARK_PYTHON"] = "/usr/bin/python3"
+os.environ["PYSPARK_DRIVER_PYTHON"] = "/usr/bin/python3"
 
 app = Flask(__name__)
 CORS(app)
@@ -70,7 +73,7 @@ def request_import_url():
         return "ECHO: PUT"
 
 if __name__=='__main__':
-    app.run(host='0.0.0.0', port=8000)
+    app.run(host='0.0.0.0', port=80)
 
 
 
