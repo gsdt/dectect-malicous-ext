@@ -43,7 +43,7 @@ function checkDB(tabId, current_url, tab) {
     response = $.post(api_endpoint, {
       url: current_url
     }).done(o => {
-      if (o.result.label === "1") {
+      if (o.result.label == "1") {
         chrome.tabs.update({
           url: chrome.extension.getURL('blocked.html') + '?url=' + current_url
         });

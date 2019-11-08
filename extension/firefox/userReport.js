@@ -59,17 +59,8 @@ document.getElementById("submit").addEventListener("click", (event) => {
             content_report: userComment.value,
         }
 
-        console.log(data)
-        
-        $.ajax({
-            url: api_endpoint_C + "report",
-            type: 'POST',
-            dataType: 'json',
-            data: data,
-            cache: false,
-            processData: false
-        }).done(function (response) {
-            alert(response);
+        response = $.post( api_endpoint_C + "report", data).done(o => {
+            alert(o.result.status);
         });
     }
     urlReport.value = ""
