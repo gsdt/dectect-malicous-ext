@@ -7,50 +7,8 @@ let detectUrlBy = document.getElementById("detectBy");
 let url = ""
 let deleteUrlExclude = document.getElementById("DeleteUrlExclude");
 
-const SERVER_IP_C = "127.0.0.1"
-const api_endpoint_C = `http://${SERVER_IP_C}:5000/api/`
-
-// //////////
-// OnAction.addEventListener("change", event => {
-//     if (event.target.checked) {
-//         // document.getElementById("actionSave").style.visibility = "visible";
-//     } else {
-//         const returnVal = confirm("Are you sure?");
-//         event.target.checked = !returnVal;
-//         if (returnVal) {
-//             // document.getElementById("actionSave").style.visibility = "visible";
-//         }
-//     }
-//     chrome.runtime.sendMessage({
-//         query: "setEnable",
-//         enable: event.target.checked
-//     }, function (response) {
-//         // console.log(response);
-//     });
-// });
-
-// chrome.runtime.sendMessage({
-//     query: "getEnable"
-// }, function (response) {
-//     console.log(response);
-//     var isEnable = false;
-//     if (response.enable === undefined) {
-//         console.log("no enable setting found!");
-//         console.log("set enable to true");
-//         chrome.runtime.sendMessage({
-//             query: "setEnable",
-//             enable: true
-//         }, function (response) {
-//             console.log(response);
-//             isEnable = true;
-//         });
-//     } else {
-//         isEnable = response.enable;
-//     }
-
-//     OnAction.checked = isEnable;
-// });
-// /////////
+const SERVER_IP_C = "203.162.10.102"
+const api_endpoint_C = `http://${SERVER_IP_C}/api/`
 
 chrome.tabs.query({
     'active': true,
@@ -64,7 +22,6 @@ chrome.tabs.query({
 chrome.storage.sync.get(["current_url", "statkeyus"], function (items) {
     var default_content = "(loading...)"
     webCurrent.innerHTML = "     " + (domain || default_content);
-    // webStatus.innerHTML = "     " + (items["status"] || default_content);
     detectUrlBy.innerHTML = "     " + (items["AI"] || "Database");
     // show dectec by ...
 });
@@ -95,7 +52,7 @@ document.getElementById("OnActionExclude").addEventListener("click", (event) => 
         });
     });
 
-    response = $.post(api_endpoint_C + "exclude/url", {
+    response = $.post(api_endpoint_C + "exclude", {
         user_id: "192.168.0.0",
         url_exclude: userExcludeUrl,
         label: "1"
@@ -151,17 +108,3 @@ document.getElementById("OnActionDelete").addEventListener("click", (event) => {
         }
     });
 })
-
-// document.getElementById("actionReportIssue").onclick = function () {
-//     //report issue extension
-//     response = $.post(api_endpoint + "report", {
-//         url: current_url
-//     }).done(o => {
-//         console.log(o.result)
-//         if (o.result) {
-//             // show notification
-
-//         }
-//     });
-
-// }

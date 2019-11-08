@@ -1,5 +1,5 @@
-const SERVER_IP = "127.0.0.1"
-const api_endpoint = `http://${SERVER_IP}:5000/api/check`
+const SERVER_IP = "203.162.10.102"
+const api_endpoint = `http://${SERVER_IP}/api/check`
 
 const webRequestFlags = [
   'blocking',
@@ -97,13 +97,13 @@ async function process(tabId, changeInfo, tab) {
 chrome.tabs.onUpdated.addListener(process);
 // chrome.webNavigation.onBeforeNavigate.addListener(process);
 
-function checkUpdateVer() {
-  response = $.post(api_endpoint_C + "exclude/url", {
-    user_id: "192.168.0.0",
-    url_exclude: userExcludeUrl,
-    label: "1"
-  }).done(o => {
-    console.log(o);
-    excludeUrl.value = ""
-  });
-}
+// function checkUpdateVer() {
+//   response = $.post(api_endpoint_C + "exclude", {
+//     user_id: "192.168.0.0",
+//     url_exclude: userExcludeUrl,
+//     label: "1"
+//   }).done(o => {
+//     console.log(o);
+//     excludeUrl.value = ""
+//   });
+// }

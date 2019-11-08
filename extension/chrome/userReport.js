@@ -1,5 +1,5 @@
-const SERVER_IP_C = "127.0.0.1"
-const api_endpoint_C = `http://${SERVER_IP_C}:5000/api/`
+const SERVER_IP_C = "203.162.10.102"
+const api_endpoint_C = `http://${SERVER_IP_C}/api/`
 
 let userName = document.getElementById('username');
 let userEmail = document.getElementById('email');
@@ -62,7 +62,7 @@ document.getElementById("submit").addEventListener("click", (event) => {
         console.log(data)
         
         $.ajax({
-            url: api_endpoint_C + "report/url",
+            url: api_endpoint_C + "report",
             type: 'POST',
             dataType: 'json',
             data: data,
@@ -71,20 +71,6 @@ document.getElementById("submit").addEventListener("click", (event) => {
         }).done(function (response) {
             alert(response);
         });
-
-        // response = $.post(api_endpoint_C + "report/url",cache: false,
-        //     processData: false ,{
-        //     user_email: userEmail,
-        //     url_report: urlCon,
-        //     label: cf,
-        //     user_name: userName,
-        //     content_report: userComment,
-        // }).done(o => {
-        //     alert(" Thanks for your report !!!")
-        //     console.log(o);
-        //     urlReport.value = ""
-        // });
-        // alert(" Thanks for your report !!!")
     }
     urlReport.value = ""
 })
