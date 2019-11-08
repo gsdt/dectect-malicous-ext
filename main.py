@@ -46,7 +46,13 @@ def check_request_url():
     print("From database:", result)
     if result == None:
         start_time = time.time()
-        is_malicous = detector.predict(url)
+        # search by domain
+        domain = o.netloc
+        result = collection.find_one({"url": domain})
+        if result != None:
+            is_malicous = result['label']
+        else:
+            is_malicous = detector.predict(url)
         print("Machine learing:", is_malicous)
         print("--- %s seconds ---" % (time.time() - start_time))
         return create_response(is_malicous, "machine_learning")
