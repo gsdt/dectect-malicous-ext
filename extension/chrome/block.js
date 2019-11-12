@@ -1,3 +1,6 @@
+const SERVER_IP = "203.162.10.102"
+const api_endpoint = `http://${SERVER_IP}/api/add`
+
 var urlCon = ""
 const key = 'blocked.html?url='
 chrome.storage.sync.get(['saveCache'], function (result) {
@@ -10,6 +13,17 @@ chrome.storage.sync.get(['saveCache'], function (result) {
         urlCon = data[0]
     }
 });
+
+document.getElementById("WhiteList").onclick = function () {
+    var params = new URLSearchParams(window.location.href);
+    const current_url = params.get('url');
+    response = $.post(api_endpoint, {
+        url: current_url,
+        label: 0
+    }).done(o => {
+        console.log(o.result)
+    });
+}
 
 document.getElementById("Redirect").onclick = function () {
     console.log(urlCon)
@@ -43,7 +57,7 @@ document.getElementById("Redirect").onclick = function () {
 document.getElementById("CloseTab").onclick = function () {
     window.close();
 }
-window.onload = function() {
+window.onload = function () {
     console.log('Processing detect type')
     var params = new URLSearchParams(window.location.href);
     const type = params.get('type');

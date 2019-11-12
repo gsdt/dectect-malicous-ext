@@ -141,6 +141,10 @@ def add_to_database():
     o = urlparse(url)
     domain = o.netloc
 
+    print("Adding to db:")
+    print("URL:", url)
+    print("domain:", domain)
+
     result = result = collection.find_one({"url": domain})
     if result != None:
         return jsonify({
