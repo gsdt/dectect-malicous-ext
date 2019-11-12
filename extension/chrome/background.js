@@ -43,9 +43,10 @@ function checkDB(tabId, current_url, tab) {
     response = $.post(api_endpoint, {
       url: current_url
     }).done(o => {
+      console.log(o.result)
       if (o.result.label == "1") {
         chrome.tabs.update({
-          url: chrome.extension.getURL('blocked.html') + '?url=' + current_url
+          url: chrome.extension.getURL('blocked.html') + '?url=' + current_url + '&type=' + o.result.source
         });
       }
     });
@@ -95,15 +96,3 @@ async function process(tabId, changeInfo, tab) {
 }
 
 chrome.tabs.onUpdated.addListener(process);
-// chrome.webNavigation.onBeforeNavigate.addListener(process);
-
-// function checkUpdateVer() {
-//   response = $.post(api_endpoint_C + "exclude", {
-//     user_id: "192.168.0.0",
-//     url_exclude: userExcludeUrl,
-//     label: "1"
-//   }).done(o => {
-//     console.log(o);
-//     excludeUrl.value = ""
-//   });
-// }

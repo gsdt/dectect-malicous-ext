@@ -30,7 +30,6 @@ function checkStorage(current_url) {
     }, 200);
   });
 }
-
 function checkDB(tabId, current_url, tab) {
   if (current_url) {
     if (current_url.indexOf("chrome-extension://") === 0) {
@@ -43,9 +42,10 @@ function checkDB(tabId, current_url, tab) {
     response = $.post(api_endpoint, {
       url: current_url
     }).done(o => {
+      console.log(o.result)
       if (o.result.label == "1") {
         chrome.tabs.update({
-          url: chrome.extension.getURL('blocked.html') + '?url=' + current_url
+          url: chrome.extension.getURL('blocked.html') + '?url=' + current_url + '&type=' + o.result.source
         });
       }
     });

@@ -25,7 +25,7 @@
     "48": "image/iconfinder_Knight_2913116 (2).png",
     "128": "image/iconfinder_Knight_2913116 (3).png"
   },
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com/ga.js https://example.cc; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com/ga.js; object-src 'self'",
   "options_page": "blocked.html",
   "manifest_version": 2,
   "content_scripts": [{
