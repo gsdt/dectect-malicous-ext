@@ -24,17 +24,19 @@ collection_excluded = db.user_exclude_url
 
 detector = Detector()
 
+
 def create_response(label, source):
     return jsonify(
         {
-            "result" : {
+            "result": {
                 "label": label,
                 "source": source
             }
         }
     )
 
-@app.route('/api/check', methods = ['POST'])
+
+@app.route('/api/check', methods=['POST'])
 def check_request_url():
     org_url = request.form["url"]
     url = org_url
@@ -110,7 +112,7 @@ def request_report_url():
         url = url[len(o.scheme) + 3:]
     if url[-1] == "/":
         url = url[0:-1]
-    
+
     data.append({
         "user_email": userEmail,
         "url": url,
@@ -129,11 +131,40 @@ def request_report_url():
     }
 
     return jsonify(response_data)
-        
 
-if __name__=='__main__':
+# for exclude url to black or white list
+@app.route('/api/add', methods=['POST'])
+def add_to_database():
+    url = request.form["url"]
+    label = request.form["label"]
+
+    o = urlparse(url)
+    domain = o.netloc
+
+    result = result = collection.find_one({"url": domain})
+    if result != None:
+        return jsonify({
+            "result": {
+                "status": "this domain already in db."
+            }
+        })
+    data = [
+        {
+            "url": url,
+            "label": label
+        },
+        {
+            "url": domain,
+            "label": label
+        }
+    ]
+    collection.insert_many(data)
+    return jsonify({
+        "result": {
+            "status": "success."
+        }
+    })
+
+
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
-
-
-
-
