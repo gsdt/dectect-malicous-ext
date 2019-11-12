@@ -53,6 +53,7 @@ def check_request_url():
         start_time = time.time()
         # search by domain
         domain = o.netloc
+        print('Checking domain:', domain)
         result = collection.find_one({"url": domain})
         if result != None:
             is_malicous = result['label']
