@@ -3,7 +3,7 @@
 from pymongo import MongoClient
 from config import MONGO_CONECTION
 import json
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_from_directory, abort
 from flask_cors import CORS
 from flask import jsonify
 from urllib.parse import urlparse
@@ -168,6 +168,25 @@ def add_to_database():
             "status": "success."
         }
     })
+
+
+@app.route('/download', methods=['GET'])
+def download_file():
+    filename = request.args.get('id')
+    try:
+        return send_from_directory('/home/chodx/remote1/2019-06-27', filename, as_attachment=True)
+    except FileNotFoundError:
+        abort(404)
+
+
+@app.route('/list', methods=['GET'])
+def list_pcap_file():
+    result = ''
+    files = os.listdir('/home/chodx/remote1/2019-06-27')
+    print(files)
+    for f in files:
+        result += f'<a href="download?id={f}">{f}</a><br>'
+    return result
 
 
 if __name__ == '__main__':
