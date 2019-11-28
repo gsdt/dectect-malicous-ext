@@ -3,7 +3,7 @@
 from pymongo import MongoClient
 from config import MONGO_CONECTION
 import json
-from flask import Flask, request, Response, send_from_directory, abort
+from flask import Flask, request, Response, send_from_directory, abort, render_template
 from flask_cors import CORS
 from flask import jsonify
 from urllib.parse import urlparse
@@ -13,7 +13,7 @@ import os
 os.environ["PYSPARK_PYTHON"] = "/usr/bin/python3"
 os.environ["PYSPARK_DRIVER_PYTHON"] = "/usr/bin/python3"
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 CORS(app)
 
 client = MongoClient(MONGO_CONECTION)
@@ -187,6 +187,17 @@ def list_pcap_file():
     for f in files:
         result += f'<a href="download?id={f}">{f}</a><br>'
     return result
+
+@app.route('/admin/reports', methods=['GET'])
+def list_reports():
+    code = request.args.get('code')
+    if code != "chodx2019@2020":
+        abort(400)
+    report_list = []
+    for document in collection_reported.find():
+        report_list += [document]
+    
+    return render_template('list.html', reports=report_list)
 
 
 if __name__ == '__main__':
