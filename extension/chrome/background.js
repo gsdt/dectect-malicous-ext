@@ -46,7 +46,7 @@ function checkDB(tabId, current_url, tab) {
       console.log(o.result)
       if (o.result.label == "1") {
         chrome.tabs.update({
-          url: chrome.extension.getURL('blocked.html') + '?url=' + current_url + '&type=' + o.result.source
+          url: chrome.extension.getURL('blocked.html') + '?a=b&url=' + current_url + '&type=' + o.result.source
         });
       }
     });

@@ -23,20 +23,12 @@ document.getElementById("WhiteList").onclick = function () {
     }).done(o => {
         console.log(o.result)
     });
+    window.location.href = current_url
 }
 
 document.getElementById("Redirect").onclick = function () {
-    console.log(urlCon)
-    var curentUrl = document.URL
-
-    var res = curentUrl.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)?/g);
-    if (res) {
-        console.log(res)
-        hi = String(res)
-        var cache_url = hi.replace(key, '');
-    } else {
-        alert('WhOOPS ! Some err, sorry, pls refrest your page')
-    }
+    var params = new URLSearchParams(window.location.href);
+    const cache_url = params.get('url');
 
     chrome.storage.sync.get(['storagekey'], function (result) {
         if (result === null) {

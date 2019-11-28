@@ -1,0 +1,42 @@
+.remove {
+    border-radius: 2px;
+    background: red;
+    color: white;
+    cursor: pointer;
+    height: fit-content;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.no {
+    width: 2rem;
+    text-align: right;
+}
+
+.url {
+    width: 20rem;
+}
+
+.domain {
+    width: 10rem;
+}
+
+.cell {
+    padding-right: 10px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.main-table {
+    float: left;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.cell-header {
+    font-weight: bold;
+}
